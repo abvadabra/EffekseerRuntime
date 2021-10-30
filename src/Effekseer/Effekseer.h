@@ -963,7 +963,7 @@ struct NodeRendererBasicParameter
 	float EmissiveScaling = 1.0f;
 
 	float EdgeThreshold = 0.0f;
-	uint8_t EdgeColor[4] = {0};
+	uint8_t EdgeColor[4];
 	float EdgeColorScaling = 1.0f;
 
 	//! copy from alphacutoff
@@ -975,6 +975,7 @@ struct NodeRendererBasicParameter
 
 	NodeRendererBasicParameter()
 	{
+        memset(EdgeColor, 0, sizeof(EdgeColor));
 		TextureIndexes.fill(-1);
 		TextureFilters.fill(TextureFilterType::Nearest);
 		TextureWraps.fill(TextureWrapType::Repeat);
@@ -1050,6 +1051,8 @@ public:
 
 namespace Effekseer
 {
+#define noexcept
+
 /**
 	@brief
 	\~English get an allocator
@@ -1133,6 +1136,13 @@ struct CustomAllocator
 {
 	using value_type = T;
 
+
+	template<class Other>
+	struct rebind
+	{	
+		typedef CustomAllocator<Other> other;
+	};
+
 	CustomAllocator()
 	{
 	}
@@ -1149,6 +1159,16 @@ struct CustomAllocator
 	void deallocate(T* p, std::size_t n)
 	{
 		GetFreeFunc()(p, sizeof(T) * static_cast<uint32_t>(n));
+	}
+
+	void construct(T* p, value_type const& val)
+	{
+		::new(p) value_type(val);
+	}
+
+	void destroy(T* p) 
+	{
+		p->~value_type();
 	}
 };
 
@@ -1279,8 +1299,8 @@ public:
 	{
 		size_t operator()(const StringView& key) const
 		{
-			constexpr size_t basis = (sizeof(size_t) == 8) ? 14695981039346656037ULL : 2166136261U;
-			constexpr size_t prime = (sizeof(size_t) == 8) ? 1099511628211ULL : 16777619U;
+			const size_t basis = (sizeof(size_t) == 8) ? 14695981039346656037ULL : 2166136261U;
+			const size_t prime = (sizeof(size_t) == 8) ? 1099511628211ULL : 16777619U;
 
 			const uint8_t* data = reinterpret_cast<const uint8_t*>(key.data());
 			size_t count = key.size() * sizeof(char16_t);

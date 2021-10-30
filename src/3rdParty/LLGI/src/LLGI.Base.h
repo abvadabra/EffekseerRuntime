@@ -520,7 +520,7 @@ namespace std
 
 template <> struct hash<LLGI::TextureFormatType>
 {
-	size_t operator()(const LLGI::TextureFormatType& _Keyval) const noexcept
+	size_t operator()(const LLGI::TextureFormatType& _Keyval) const
 	{
 		return std::hash<uint32_t>()(static_cast<uint32_t>(_Keyval));
 	}

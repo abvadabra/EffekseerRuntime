@@ -139,7 +139,11 @@ TextureProperty GetTextureProperty(::Effekseer::Backend::TextureRef texture)
 	if (texture != nullptr)
 	{
 		auto t = texture.DownCast<Backend::Texture>();
-		return TextureProperty{t->GetSRV(), t->GetRTV(), t->GetDSV()};
+        TextureProperty prop;
+        prop.ShaderResourceViewPtr = t->GetSRV();
+        prop.RenderTargetViewPtr = t->GetRTV();
+        prop.DepthStencilViewPtr = t->GetDSV();
+        return prop;
 	}
 	else
 	{

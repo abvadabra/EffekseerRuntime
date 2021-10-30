@@ -19,7 +19,7 @@ namespace Effekseer
 class PerlinNoise
 {
 	using Pint = std::uint_fast8_t;
-	std::array<Pint, 512> p{{}};
+	std::array<Pint, 512> p{};
 
 	uint32_t seed_ = 0;
 
@@ -41,7 +41,7 @@ class PerlinNoise
 	}
 
 public:
-	constexpr PerlinNoise() = default;
+	PerlinNoise() = default;
 	explicit PerlinNoise(const std::uint_fast32_t seed)
 	{
 		this->setSeed(seed);
@@ -65,12 +65,12 @@ public:
 	}
 
 private:
-	constexpr float GetFade(const float t) const noexcept
+	float GetFade(const float t) const
 	{
 		return t * t * t * (t * (t * 6 - 15) + 10);
 	}
 
-	SIMD::Float4 GetFadeFast(const SIMD::Float4 in) const noexcept
+	SIMD::Float4 GetFadeFast(const SIMD::Float4 in) const
 	{
 		const SIMD::Float4 c6(6.0f);
 		const SIMD::Float4 c15(15.0f);
@@ -82,33 +82,33 @@ private:
 		return t3 * t6_15_10;
 	}
 
-	constexpr float GetLerp(const float t, const float a, const float b) const noexcept
+	float GetLerp(const float t, const float a, const float b) const
 	{
 		return a + t * (b - a);
 	}
 
-	SIMD::Float4 GetLerpFast(const SIMD::Float4 t, const SIMD::Float4 a, const SIMD::Float4 b) const noexcept
+	SIMD::Float4 GetLerpFast(const SIMD::Float4 t, const SIMD::Float4 a, const SIMD::Float4 b) const
 	{
 		return a + t * (b - a);
 	}
 
-	constexpr float MakeGrad(const Pint hashnum, const float u, const float v) const noexcept
+	float MakeGrad(const Pint hashnum, const float u, const float v) const
 	{
 		return (((hashnum & 1) == 0) ? u : -u) + (((hashnum & 2) == 0) ? v : -v);
 	}
 
-	constexpr float MakeGrad(const Pint hashnum, const float x, const float y, const float z) const noexcept
+	float MakeGrad(const Pint hashnum, const float x, const float y, const float z) const
 	{
 		return this->MakeGrad(hashnum, hashnum < 8 ? x : y, hashnum < 4 ? y : hashnum == 12 || hashnum == 14 ? x
 																											 : z);
 	}
 
-	constexpr float GetGrad(const Pint hashnum, const float x, const float y, const float z) const noexcept
+	float GetGrad(const Pint hashnum, const float x, const float y, const float z) const
 	{
 		return this->MakeGrad(hashnum & 15, x, y, z);
 	}
 
-	float MakeGradFast(const Pint hashnum, const float u, const float v) const noexcept
+	float MakeGradFast(const Pint hashnum, const float u, const float v) const
 	{
 		union
 		{
@@ -125,18 +125,18 @@ private:
 		return u_bits.f + v_bits.f;
 	}
 
-	float MakeGradFast(const Pint hashnum, const float x, const float y, const float z) const noexcept
+	float MakeGradFast(const Pint hashnum, const float x, const float y, const float z) const
 	{
 		return this->MakeGradFast(hashnum, hashnum < 8 ? x : y, hashnum < 4 ? y : hashnum == 12 || hashnum == 14 ? x
 																												 : z);
 	}
 
-	float GetGradFast(const Pint hashnum, const float x, const float y, const float z) const noexcept
+	float GetGradFast(const Pint hashnum, const float x, const float y, const float z) const
 	{
 		return this->MakeGradFast(hashnum & 15, x, y, z);
 	}
 
-	SIMD::Float4 MakeGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 u, const SIMD::Float4 v) const noexcept
+	SIMD::Float4 MakeGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 u, const SIMD::Float4 v) const
 	{
 		SIMD::Int4 hashBits1 = hashnum & SIMD::Int4(1);
 		SIMD::Int4 hashBits2 = hashnum & SIMD::Int4(2);
@@ -144,7 +144,7 @@ private:
 		return (u ^ SIMD::Int4::ShiftL<31>(hashBits1).Cast4f()) + (v ^ SIMD::Int4::ShiftL<30>(hashBits2).Cast4f());
 	}
 
-	SIMD::Float4 MakeGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 x, const SIMD::Float4 y, const SIMD::Float4 z) const noexcept
+	SIMD::Float4 MakeGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 x, const SIMD::Float4 y, const SIMD::Float4 z) const
 	{
 		SIMD::Float4 in1_mask = SIMD::Int4::LessThan(hashnum, SIMD::Int4(8)).Cast4f();
 		SIMD::Float4 in1 = SIMD::Float4::Select(in1_mask, x, y);
@@ -156,13 +156,13 @@ private:
 		return this->MakeGradFast(hashnum, in1, in2);
 	}
 
-	SIMD::Float4 GetGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 x, const SIMD::Float4 y, const SIMD::Float4 z) const noexcept
+	SIMD::Float4 GetGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 x, const SIMD::Float4 y, const SIMD::Float4 z) const
 	{
 		return this->MakeGradFast(hashnum & SIMD::Int4(15), x, y, z);
 	}
 
 public:
-	float SetNoise(SIMD::Vec3f position) const noexcept
+	float SetNoise(SIMD::Vec3f position) const
 	{
 		SIMD::Float4 in = position.s;
 		SIMD::Float4 flin = SIMD::Float4::Floor(in);
@@ -201,13 +201,13 @@ public:
 		return this->GetLerp(w, this->GetLerp(v, vv.GetX(), vv.GetY()), this->GetLerp(v, vv.GetZ(), vv.GetW()));
 	}
 
-	float Noise(SIMD::Vec3f position) const noexcept
+	float Noise(SIMD::Vec3f position) const
 	{
 		return this->SetNoise(position) * 0.5f + 0.5f;
 	}
 
 public:
-	float OctaveNoise(const std::size_t octaves_, SIMD::Vec3f position) const noexcept
+	float OctaveNoise(const std::size_t octaves_, SIMD::Vec3f position) const
 	{
 		float noise_value{};
 		float amp{1.0};

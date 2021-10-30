@@ -30,7 +30,7 @@ MaterialLoader ::~MaterialLoader()
 {
 	// code file
 	{
-		auto binaryPath = std::u16string(path) + u"d";
+		auto binaryPath = std::u16string(path) + (char16_t)'d';
 		std::unique_ptr<Effekseer::FileReader> reader(fileInterface_->OpenRead(binaryPath.c_str()));
 
 		if (reader.get() != nullptr)

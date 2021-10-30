@@ -14,7 +14,7 @@ namespace Effekseer
 	@note
 	instances are allocated as a group because of memory optimization
 */
-class alignas(32) InstanceChunk
+__declspec(align(32)) class InstanceChunk
 {
 public:
 	static const int32_t InstancesOfChunk = 16;

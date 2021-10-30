@@ -46,7 +46,7 @@ template <typename T>
 struct easing_type_information
 {
 	using type = void;
-	static constexpr uint8_t elemNum = 0;
+	static const uint8_t elemNum = 0;
 };
 
 template <>
@@ -60,7 +60,7 @@ template <>
 struct easing_type_information<SIMD::Vec3f>
 {
 	using type = random_vector3d;
-	static constexpr uint8_t elemNum = 3;
+	static const uint8_t elemNum = 3;
 };
 
 template <typename T>
@@ -78,7 +78,7 @@ struct ParameterEasing
 protected:
 	using InstanceEasingType = InstanceEasing<T>;
 	using RandomValue = typename easing_type_information<T>::type;
-	static constexpr uint8_t ElemNum = easing_type_information<T>::elemNum;
+	static const uint8_t ElemNum = easing_type_information<T>::elemNum;
 
 protected:
 	float getEasingStartEndValue(float t) const

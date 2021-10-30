@@ -20,11 +20,13 @@ namespace EffekseerRendererDX11
 ::Effekseer::Backend::GraphicsDeviceRef CreateGraphicsDevice(ID3D11Device* device,
 															 ID3D11DeviceContext* context);
 
-[[deprecated("please use EffekseerRenderer::CreateTextureLoader")]] ::Effekseer::TextureLoaderRef CreateTextureLoader(::Effekseer::Backend::GraphicsDeviceRef gprahicsDevice,
+//[[deprecated("please use EffekseerRenderer::CreateTextureLoader")]]
+::Effekseer::TextureLoaderRef CreateTextureLoader(::Effekseer::Backend::GraphicsDeviceRef gprahicsDevice,
 																													  ::Effekseer::FileInterface* fileInterface = nullptr,
 																													  ::Effekseer::ColorSpaceType colorSpaceType = ::Effekseer::ColorSpaceType::Gamma);
 
-[[deprecated("please use EffekseerRenderer::CreateModelLoader")]] ::Effekseer::ModelLoaderRef CreateModelLoader(::Effekseer::Backend::GraphicsDeviceRef gprahicsDevice, ::Effekseer::FileInterface* fileInterface = nullptr);
+//[[deprecated("please use EffekseerRenderer::CreateModelLoader")]]
+::Effekseer::ModelLoaderRef CreateModelLoader(::Effekseer::Backend::GraphicsDeviceRef gprahicsDevice, ::Effekseer::FileInterface* fileInterface = nullptr);
 
 ::Effekseer::Backend::TextureRef CreateTexture(::Effekseer::Backend::GraphicsDeviceRef gprahicsDevice, ID3D11ShaderResourceView* srv, ID3D11RenderTargetView* rtv, ID3D11DepthStencilView* dsv);
 
@@ -85,7 +87,8 @@ public:
 		@brief	\~English	Set background
 				\~Japanese	背景を設定する
 	*/
-	[[deprecated("please use EffekseerRenderer::SetBackground")]] virtual void SetBackground(ID3D11ShaderResourceView* background) = 0;
+//	[[deprecated("please use EffekseerRenderer::SetBackground")]]
+    virtual void SetBackground(ID3D11ShaderResourceView* background) = 0;
 
 	/**
 		@brief	\~English	Reset internal states for DefferedContext

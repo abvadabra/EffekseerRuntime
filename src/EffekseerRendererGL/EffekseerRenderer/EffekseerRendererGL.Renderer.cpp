@@ -112,7 +112,9 @@ TextureProperty GetTextureProperty(::Effekseer::Backend::TextureRef texture)
 	if (texture != nullptr)
 	{
 		auto t = texture.DownCast<Backend::Texture>();
-		return TextureProperty{t->GetBuffer()};
+        TextureProperty prop;
+        prop.Buffer = t->GetBuffer();
+		return prop;
 	}
 	else
 	{

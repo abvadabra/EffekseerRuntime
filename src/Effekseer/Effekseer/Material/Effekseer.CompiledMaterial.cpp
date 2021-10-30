@@ -178,19 +178,21 @@ bool CompiledMaterial::Load(const uint8_t* data, int32_t size)
 	return true;
 }
 
+
+struct Header
+{
+    char header[4];
+    int version;
+    uint64_t guid = 0;
+};
+
 void CompiledMaterial::Save(std::vector<uint8_t>& dst, uint64_t guid, std::vector<uint8_t>& originalData)
 {
 	dst.reserve(1024 * 64);
 	size_t offset = 0;
 
-	struct Header
-	{
-		char header[4];
-		int version = Version;
-		uint64_t guid = 0;
-	};
-
 	Header h;
+    h.version = Version;
 	h.header[0] = 'e';
 	h.header[1] = 'M';
 	h.header[2] = 'C';

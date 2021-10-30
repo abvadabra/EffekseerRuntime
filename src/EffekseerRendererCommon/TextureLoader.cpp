@@ -31,7 +31,7 @@ Effekseer::TextureRef TextureLoader::Load(const char16_t* path, ::Effekseer::Tex
 	if (reader.get() != nullptr)
 	{
 		auto path16 = std::u16string(path);
-		auto isMipEnabled = path16.find(u"_NoMip") == std::u16string::npos;
+		auto isMipEnabled = path16.find((const char16_t*)"_NoMip") == std::u16string::npos;
 
 		size_t fileSize = reader->GetLength();
 		std::vector<uint8_t> fileData(fileSize);

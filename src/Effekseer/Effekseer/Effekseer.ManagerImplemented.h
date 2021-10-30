@@ -23,7 +23,7 @@ class ManagerImplemented : public Manager, public ReferenceObject
 	friend class InstanceGroup;
 
 private:
-	class alignas(32) DrawSet
+    __declspec(align(32)) class DrawSet
 	{
 	public:
 		EffectRef ParameterPointer;

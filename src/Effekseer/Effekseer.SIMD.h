@@ -1178,7 +1178,7 @@ struct Int4;
 	@brief	simd class for sse
 */
 
-struct alignas(16) Float4
+__declspec(align(16)) struct Float4
 {
 	__m128 s;
 
@@ -2526,7 +2526,7 @@ struct Float4;
 	@brief	simd class for sse
 */
 
-struct alignas(16) Int4
+__declspec(align(16)) struct Int4
 {
 	__m128i s;
 
@@ -3371,7 +3371,7 @@ namespace std
 template <>
 struct hash<Effekseer::SIMD::Vec3f>
 {
-	size_t operator()(const Effekseer::SIMD::Vec3f& _Keyval) const noexcept
+	size_t operator()(const Effekseer::SIMD::Vec3f& _Keyval) const
 	{
 		return std::hash<float>()(_Keyval.GetX()) + std::hash<float>()(_Keyval.GetY()) + std::hash<float>()(_Keyval.GetZ());
 	}

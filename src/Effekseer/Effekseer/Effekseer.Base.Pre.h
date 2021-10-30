@@ -963,7 +963,7 @@ struct NodeRendererBasicParameter
 	float EmissiveScaling = 1.0f;
 
 	float EdgeThreshold = 0.0f;
-	uint8_t EdgeColor[4] = {0};
+	uint8_t EdgeColor[4];
 	float EdgeColorScaling = 1.0f;
 
 	//! copy from alphacutoff
@@ -975,6 +975,7 @@ struct NodeRendererBasicParameter
 
 	NodeRendererBasicParameter()
 	{
+		memset(EdgeColor, 0, sizeof(EdgeColor));
 		TextureIndexes.fill(-1);
 		TextureFilters.fill(TextureFilterType::Nearest);
 		TextureWraps.fill(TextureWrapType::Repeat);

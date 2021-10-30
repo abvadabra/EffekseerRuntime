@@ -137,8 +137,8 @@ struct ProceduralModelParameter
 	std::array<float, 3> CurlNoiseOffset = {};
 	std::array<float, 3> CurlNoisePower = {};
 
-	std::array<float, 2> ColorCenterPosition = {0.5f, 0.5f};
-	std::array<float, 2> ColorCenterArea = {0.0f, 0.0f};
+	std::array<float, 2> ColorCenterPosition = {};
+	std::array<float, 2> ColorCenterArea = {};
 
 	Color ColorUpperLeft;
 	Color ColorUpperCenter;
@@ -154,8 +154,15 @@ struct ProceduralModelParameter
 	std::array<float, 3> VertexColorNoiseOffset = {};
 	std::array<float, 3> VertexColorNoisePower = {};
 
-	std::array<float, 2> UVPosition = {0.0f, 0.5f};
-	std::array<float, 2> UVSize = {1.0f, 1.0f};
+	std::array<float, 2> UVPosition = {};
+	std::array<float, 2> UVSize = {};
+
+	ProceduralModelParameter() {
+		ColorCenterPosition = {0.5f, 0.5f};
+		ColorCenterArea = {0.0f, 0.0f};
+		UVPosition = {0.0f, 0.5f};
+		UVSize = {1.0f, 1.0f};
+	}
 
 	bool operator<(const ProceduralModelParameter& rhs) const
 	{

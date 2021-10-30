@@ -18,7 +18,7 @@ struct Float4;
 	@brief	simd class for sse
 */
 
-struct alignas(16) Int4
+__declspec(align(16)) struct Int4
 {
 	__m128i s;
 

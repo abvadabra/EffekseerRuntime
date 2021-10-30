@@ -10,7 +10,7 @@ project(Effekseer C CXX)
 if(APPLE)
     set(CMAKE_CXX_STANDARD 14)
 else()	
-    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD 11)
 endif()
 
 if (MSVC)

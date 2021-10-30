@@ -62,7 +62,7 @@ struct InstanceCustomData
 /**
 	@brief	エフェクトの実体
 */
-class alignas(16) Instance : public IntrusiveList<Instance>::Node
+__declspec(align(16)) class Instance : public IntrusiveList<Instance>::Node
 {
 	friend class Manager;
 	friend class InstanceContainer;

@@ -4,6 +4,8 @@
 namespace EffekseerRenderer
 {
 
+#define constexpr
+
 enum class DdsDx10Format : uint32_t
 {
 	R8G8B8A8_UNORM = 28,
@@ -20,7 +22,7 @@ enum class DdsDx10Format : uint32_t
 	BC5_SNORM = 84,
 };
 
-constexpr uint32_t MakeFourCC(const char v1, const char v2, const char v3, const char v4)
+uint32_t MakeFourCC(const char v1, const char v2, const char v3, const char v4)
 {
 	return ((static_cast<uint32_t>(v1)) | (static_cast<uint32_t>(v2) << 8) | (static_cast<uint32_t>(v3) << 16) | (static_cast<uint32_t>(v4) << 24));
 }

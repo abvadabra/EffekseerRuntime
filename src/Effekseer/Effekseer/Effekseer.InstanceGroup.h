@@ -25,7 +25,7 @@ namespace Effekseer
 	@note
 	インスタンスコンテナ内でさらにインスタンスをグループ化するクラス
 */
-class alignas(32) InstanceGroup
+__declspec(align(32)) class InstanceGroup
 {
 	friend class InstanceContainer;
 	friend class ManagerImplemented;

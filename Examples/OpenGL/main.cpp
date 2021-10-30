@@ -11,6 +11,11 @@ void TerminateWindowAndDevice();
 void ClearScreen();
 void PresentDevice();
 
+void* createRenderer() {
+    auto rendererRef = ::EffekseerRendererGL::Renderer::Create(100, EffekseerRendererGL::OpenGLDeviceType::OpenGL3);
+    return rendererRef.Get();
+}
+
 int main(int argc, char** argv)
 {
 	int32_t windowWidth = 1280;
@@ -58,7 +63,7 @@ int main(int argc, char** argv)
 
 	// Load an effect
 	// エフェクトの読込
-	auto effect = Effekseer::Effect::Create(manager, EFK_EXAMPLE_ASSETS_DIR_U16 "Laser01.efk");
+	auto effect = Effekseer::Effect::Create(manager, (char16_t*)(EFK_EXAMPLE_ASSETS_DIR_U16 L"Laser01.efk"));
 
 	int32_t time = 0;
 	Effekseer::Handle handle = 0;
@@ -110,7 +115,8 @@ int main(int argc, char** argv)
 		time++;
 	}
 
-	// Dispose the manager
+	// Dis
+    // pose the manager
 	// マネージャーの破棄
 	manager.Reset();
 

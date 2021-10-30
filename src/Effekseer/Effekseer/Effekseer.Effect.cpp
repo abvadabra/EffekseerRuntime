@@ -56,9 +56,9 @@ static void PathCombine(char16_t* dst, const char16_t* src1, const char16_t* src
 
 	for (int i = 0; i < len1 + len2; i++)
 	{
-		if (dst[i] == u'\\')
+		if (dst[i] == '\\')
 		{
-			dst[i] = u'/';
+			dst[i] = '/';
 		}
 	}
 
@@ -91,7 +91,7 @@ static std::u16string getFilenameWithoutExt(const char16_t* path)
 
 	for (int i = 0; path[i] != 0; i++)
 	{
-		if (path[i] == u'/' || path[i] == u'\\')
+		if (path[i] == '/' || path[i] == '\\')
 		{
 			start = i;
 		}
@@ -99,7 +99,7 @@ static std::u16string getFilenameWithoutExt(const char16_t* path)
 
 	for (int i = start; path[i] != 0; i++)
 	{
-		if (path[i] == u'.')
+		if (path[i] == '.')
 		{
 			end = i;
 		}

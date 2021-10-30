@@ -407,7 +407,7 @@ MaterialLoader ::~MaterialLoader()
 	// code file
 	if (canLoadFromCache_)
 	{
-		auto binaryPath = std::u16string(path) + u"d";
+		auto binaryPath = std::u16string(path) + (char16_t*)L"d";
 		std::unique_ptr<Effekseer::FileReader> reader(fileInterface_->TryOpenRead(binaryPath.c_str()));
 
 		if (reader.get() != nullptr)

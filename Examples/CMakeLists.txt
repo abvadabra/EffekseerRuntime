@@ -19,7 +19,7 @@ if (MSVC)
 endif()
 
 add_definitions(-DEFK_EXAMPLE_ASSETS_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/Resources/\")
-add_definitions(-DEFK_EXAMPLE_ASSETS_DIR_U16=u\"${CMAKE_CURRENT_SOURCE_DIR}/Resources/\")
+add_definitions(-DEFK_EXAMPLE_ASSETS_DIR_U16=L\"${CMAKE_CURRENT_SOURCE_DIR}/Resources/\")
 
 if (GLFW3_LIB_DEBUG)
     # Build time.

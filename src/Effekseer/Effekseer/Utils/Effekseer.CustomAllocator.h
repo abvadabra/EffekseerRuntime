@@ -93,9 +93,16 @@ FreeFunc GetFreeFunc();
 void SetFreeFunc(FreeFunc func);
 
 template <class T>
-struct CustomAllocator
+struct
+	CustomAllocator : std::allocator<T>
 {
 	using value_type = T;
+
+	template<class Other>
+	struct rebind
+	{
+		typedef CustomAllocator<Other> other;
+	};
 
 	CustomAllocator()
 	{
@@ -243,8 +250,8 @@ public:
 	{
 		size_t operator()(const StringView& key) const
 		{
-			constexpr size_t basis = (sizeof(size_t) == 8) ? 14695981039346656037ULL : 2166136261U;
-			constexpr size_t prime = (sizeof(size_t) == 8) ? 1099511628211ULL : 16777619U;
+			const size_t basis = (sizeof(size_t) == 8) ? 14695981039346656037ULL : 2166136261U;
+			const size_t prime = (sizeof(size_t) == 8) ? 1099511628211ULL : 16777619U;
 
 			const uint8_t* data = reinterpret_cast<const uint8_t*>(key.data());
 			size_t count = key.size() * sizeof(char16_t);

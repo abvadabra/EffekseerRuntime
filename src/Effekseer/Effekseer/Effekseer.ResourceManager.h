@@ -171,7 +171,7 @@ private:
 		{
 			if (loader != nullptr && resource != nullptr)
 			{
-				if (resource->GetPath() != u"")
+				if (resource->GetPath().empty())
 				{
 					auto it = cached.find(resource->GetPath());
 					if (it != cached.end())

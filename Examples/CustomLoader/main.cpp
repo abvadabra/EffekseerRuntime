@@ -10,6 +10,7 @@
 // イメージを読み込むためのヘルパー関数
 #define STB_IMAGE_EFK_IMPLEMENTATION
 #include <stb_image_utils.h>
+#include <iostream>
 
 bool InitializeWindowAndDevice(int32_t windowWidth, int32_t windowHeight);
 bool DoEvent();
@@ -51,6 +52,8 @@ public:
 	Effekseer::TextureRef Load(const EFK_CHAR* path, ::Effekseer::TextureType textureType) override
 	{
 		std::unique_ptr<::Effekseer::FileReader> reader(fileInterface_->OpenRead(path));
+
+        std::wcout << (wchar_t*)path << std::endl;
 
 		if (reader.get() != nullptr)
 		{
@@ -211,7 +214,7 @@ int main(int argc, char** argv)
 
 	// Load an effect
 	// エフェクトの読込
-	auto effect = Effekseer::Effect::Create(manager, EFK_EXAMPLE_ASSETS_DIR_U16 "Laser01.efk");
+	auto effect = Effekseer::Effect::Create(manager, (char16_t*)(EFK_EXAMPLE_ASSETS_DIR_U16 L"Laser01.efk"));
 
 	int32_t time = 0;
 	Effekseer::Handle handle = 0;

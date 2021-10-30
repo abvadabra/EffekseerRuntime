@@ -5,6 +5,7 @@
 #include "../Effekseer.Math.h"
 #include "Float4.h"
 #include <functional>
+#include <array>
 
 namespace Effekseer
 {
@@ -251,7 +252,7 @@ namespace std
 template <>
 struct hash<Effekseer::SIMD::Vec3f>
 {
-	size_t operator()(const Effekseer::SIMD::Vec3f& _Keyval) const noexcept
+	size_t operator()(const Effekseer::SIMD::Vec3f& _Keyval) const
 	{
 		return std::hash<float>()(_Keyval.GetX()) + std::hash<float>()(_Keyval.GetY()) + std::hash<float>()(_Keyval.GetZ());
 	}
