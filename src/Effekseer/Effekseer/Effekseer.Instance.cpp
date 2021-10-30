@@ -1167,7 +1167,7 @@ void Instance::Update(float deltaFrame, bool shown)
 
 		if (m_pEffectNode->AlphaCutoff.Type == ParameterAlphaCutoff::EType::FIXED)
 		{
-			if (m_pEffectNode->AlphaCutoff.Fixed.RefEq >= 0)
+			if (m_pEffectNode->RendererCommon.BasicParameter.IsAlphaCutoffEnabled && m_pEffectNode->AlphaCutoff.Fixed.RefEq >= 0)
 			{
 				auto alphaThreshold = static_cast<float>(m_pEffectNode->AlphaCutoff.Fixed.Threshold);
 				ApplyEq(alphaThreshold,
