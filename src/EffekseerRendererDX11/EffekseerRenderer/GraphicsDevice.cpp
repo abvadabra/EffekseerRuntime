@@ -615,7 +615,7 @@ bool Texture::Init(
 
 bool Texture::Init(const Effekseer::Backend::TextureParameter& param)
 {
-	auto ret = Init(param.Format, param.GenerateMipmap, param.Size, param.InitialData, false);
+	auto ret = Init(param.Format, param.GenerateMipmap, param.Size, param.InitialData[0], false);
 
 	type_ = Effekseer::Backend::TextureType::Color2D;
 

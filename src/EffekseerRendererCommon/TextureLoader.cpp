@@ -73,7 +73,8 @@ Effekseer::TextureRef TextureLoader::Load(const void* data, int32_t size, Effeks
 				param.Size[1] = pngTextureLoader_.GetHeight();
 				param.Format = format;
 				param.GenerateMipmap = isMipMapEnabled;
-				param.InitialData.assign(pngTextureLoader_.GetData().begin(), pngTextureLoader_.GetData().end());
+                param.InitialData.resize(1);
+				param.InitialData[0].assign(pngTextureLoader_.GetData().begin(), pngTextureLoader_.GetData().end());
 
 				auto texture = ::Effekseer::MakeRefPtr<::Effekseer::Texture>();
 				texture->SetBackend(graphicsDevice_->CreateTexture(param));
@@ -100,7 +101,10 @@ Effekseer::TextureRef TextureLoader::Load(const void* data, int32_t size, Effeks
 			param.Size[0] = ddsTextureLoader_.GetTextures().at(0).Width;
 			param.Size[1] = ddsTextureLoader_.GetTextures().at(0).Height;
 			param.Format = ddsTextureLoader_.GetBackendTextureFormat();
-			param.InitialData.assign(ddsTextureLoader_.GetTextures().at(0).Data.begin(), ddsTextureLoader_.GetTextures().at(0).Data.end());
+            param.InitialData.resize(ddsTextureLoader_.GetTextures().size());
+            for(int i = 0; i < ddsTextureLoader_.GetTextures().size(); i++) {
+                param.InitialData[i].assign(ddsTextureLoader_.GetTextures().at(i).Data.begin(), ddsTextureLoader_.GetTextures().at(i).Data.end());
+            }
 			param.GenerateMipmap = false; // TODO : Support nomipmap
 
 			auto texture = ::Effekseer::MakeRefPtr<::Effekseer::Texture>();
@@ -129,7 +133,8 @@ Effekseer::TextureRef TextureLoader::Load(const void* data, int32_t size, Effeks
 				param.Size[1] = tgaTextureLoader_.GetHeight();
 				param.Format = format;
 				param.GenerateMipmap = isMipMapEnabled;
-				param.InitialData.assign(tgaTextureLoader_.GetData().begin(), tgaTextureLoader_.GetData().end());
+                param.InitialData.resize(1);
+				param.InitialData[0].assign(tgaTextureLoader_.GetData().begin(), tgaTextureLoader_.GetData().end());
 
 				auto texture = ::Effekseer::MakeRefPtr<::Effekseer::Texture>();
 				texture->SetBackend(graphicsDevice_->CreateTexture(param));

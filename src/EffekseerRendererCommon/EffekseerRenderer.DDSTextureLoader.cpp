@@ -209,13 +209,15 @@ bool DDSTextureLoader::Load(const void* data, int32_t size)
 		return false;
 	}
 
+    int texturesCount = (dds.dwFlags & 0x00020000) > 0 ? dds.dwMipMapCount : 1;
+
 	backendTextureFormatType = format;
-	textures_.reserve(dds.dwMipMapCount);
+	textures_.reserve(texturesCount);
 
 	int32_t width = static_cast<int32_t>(dds.dwWidth);
 	int32_t height = static_cast<int32_t>(dds.dwHeight);
 
-	for (size_t i = 0; i < dds.dwMipMapCount; i++)
+	for (size_t i = 0; i < texturesCount; i++)
 	{
 		int32_t textureSize{};
 

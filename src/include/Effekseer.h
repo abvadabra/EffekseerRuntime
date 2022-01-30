@@ -2565,7 +2565,16 @@ struct TextureParameter
 	TextureFormatType Format = TextureFormatType::R8G8B8A8_UNORM;
 	bool GenerateMipmap = true;
 	std::array<int32_t, 2> Size;
-	CustomVector<uint8_t> InitialData;
+	CustomVector<CustomVector<uint8_t>> InitialData;
+
+    int32_t GetLevelSizeX(const int32_t level) const {
+        return Max((int32_t)1, Size[0] >> level);
+    }
+
+    int32_t GetLevelSizeY(const int32_t level) const {
+        return Max((int32_t)1, Size[1] >> level);
+    }
+
 };
 
 struct RenderTextureParameter

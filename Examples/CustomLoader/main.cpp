@@ -84,22 +84,23 @@ public:
 			param.GenerateMipmap = true;
 			param.Size[0] = width;
 			param.Size[1] = height;
+            param.InitialData.resize(1);
 
 			if (bpp == 4)
 			{
-				param.InitialData.assign(pixels, pixels + width * height * 4);
+				param.InitialData[0].assign(pixels, pixels + width * height * 4);
 			}
 			else
 			{
-				param.InitialData.resize(width * height * 4);
+				param.InitialData[0].resize(width * height * 4);
 				for (int y = 0; y < height; y++)
 				{
 					for (int x = 0; x < width; x++)
 					{
-						param.InitialData[(x + y * width) * 4 + 0] = pixels[(x + y * width) * 3 + 0];
-						param.InitialData[(x + y * width) * 4 + 1] = pixels[(x + y * width) * 3 + 1];
-						param.InitialData[(x + y * width) * 4 + 2] = pixels[(x + y * width) * 3 + 2];
-						param.InitialData[(x + y * width) * 4 + 3] = 255;
+						param.InitialData[0][(x + y * width) * 4 + 0] = pixels[(x + y * width) * 3 + 0];
+						param.InitialData[0][(x + y * width) * 4 + 1] = pixels[(x + y * width) * 3 + 1];
+						param.InitialData[0][(x + y * width) * 4 + 2] = pixels[(x + y * width) * 3 + 2];
+						param.InitialData[0][(x + y * width) * 4 + 3] = 255;
 					}
 				}
 			}

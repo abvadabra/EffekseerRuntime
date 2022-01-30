@@ -200,7 +200,8 @@ void Renderer::SetBackground(::Effekseer::Backend::TextureRef texture)
 	param.Format = Effekseer::Backend::TextureFormatType::R8G8B8A8_UNORM;
 	param.Size = {1, 1};
 	param.GenerateMipmap = false;
-	param.InitialData.assign(buf.begin(), buf.end());
+    param.InitialData.resize(1);
+	param.InitialData[0].assign(buf.begin(), buf.end());
 	return GetGraphicsDevice()->CreateTexture(param);
 }
 
