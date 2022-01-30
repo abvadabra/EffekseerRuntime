@@ -274,8 +274,8 @@ bool Texture::InitInternal(const Effekseer::Backend::TextureParameter& param)
 						param.Format == Effekseer::Backend::TextureFormatType::BC2_SRGB ||
 						param.Format == Effekseer::Backend::TextureFormatType::BC3_SRGB;
 
-	const size_t initialDataSize = param.InitialData.size();
-	const void* initialDataPtr = param.InitialData.size() > 0 ? param.InitialData.data() : nullptr;
+    const bool hasData = param.InitialData.size() > 0 && param.InitialData[0].size() > 0;
+    const size_t textureLevels = param.InitialData.size();
 
 	if (isCompressed)
 	{
@@ -306,14 +306,28 @@ bool Texture::InitInternal(const Effekseer::Backend::TextureParameter& param)
 			format = GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT;
 		}
 
-		GLExt::glCompressedTexImage2D(GL_TEXTURE_2D,
-									  0,
-									  format,
-									  param.Size[0],
-									  param.Size[1],
-									  0,
-									  static_cast<GLsizei>(initialDataSize),
-									  initialDataPtr);
+        if(hasData) {
+            for(int i = 0; i < textureLevels; i++) {
+                GLExt::glCompressedTexImage2D(GL_TEXTURE_2D,
+                                              i,
+                                              format,
+                                              param.GetLevelSizeX(i),
+                                              param.GetLevelSizeY(i),
+                                              0,
+                                              static_cast<GLsizei>(param.InitialData[i].size()),
+                                              param.InitialData[i].data());
+            }
+        } else {
+            GLExt::glCompressedTexImage2D(GL_TEXTURE_2D,
+                                          0,
+                                          format,
+                                          param.Size[0],
+                                          param.Size[1],
+                                          0,
+                                          static_cast<GLsizei>(0),
+                                          nullptr);
+        }
+
 	}
 	else
 	{
@@ -370,15 +384,29 @@ bool Texture::InitInternal(const Effekseer::Backend::TextureParameter& param)
 			type = GL_FLOAT;
 		}
 
-		glTexImage2D(GL_TEXTURE_2D,
-					 0,
-					 internalFormat,
-					 param.Size[0],
-					 param.Size[1],
-					 0,
-					 format,
-					 type,
-					 initialDataPtr);
+        if(hasData) {
+            for(int i = 0; i < textureLevels; i++) {
+                glTexImage2D(GL_TEXTURE_2D,
+                             i,
+                             internalFormat,
+                             param.GetLevelSizeX(i),
+                             param.GetLevelSizeY(i),
+                             0,
+                             format,
+                             type,
+                             param.InitialData[i].data());
+            }
+        } else {
+            glTexImage2D(GL_TEXTURE_2D,
+                         0,
+                         internalFormat,
+                         param.Size[0],
+                         param.Size[1],
+                         0,
+                         format,
+                         type,
+                         nullptr);
+        }
 	}
 
 	if (param.GenerateMipmap)
@@ -390,7 +418,7 @@ bool Texture::InitInternal(const Effekseer::Backend::TextureParameter& param)
 
 	size_ = param.Size;
 	format_ = param.Format;
-	hasMipmap_ = param.GenerateMipmap;
+	hasMipmap_ = param.GenerateMipmap || textureLevels > 1;
 
 	return true;
 }

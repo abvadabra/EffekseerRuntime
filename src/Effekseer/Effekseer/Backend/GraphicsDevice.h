@@ -399,7 +399,7 @@ struct TextureParameter
 	TextureFormatType Format = TextureFormatType::R8G8B8A8_UNORM;
 	bool GenerateMipmap = true;
 	std::array<int32_t, 2> Size;
-	CustomVector<uint8_t> InitialData;
+	CustomVector<CustomVector<uint8_t>> InitialData;
 };
 
 struct RenderTextureParameter

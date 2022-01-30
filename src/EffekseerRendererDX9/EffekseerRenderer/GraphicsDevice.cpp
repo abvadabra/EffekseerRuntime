@@ -364,9 +364,9 @@ bool Texture::Init(const Effekseer::Backend::TextureParameter& param)
 		return false;
 	}
 
-	if (param.InitialData.size() > 0)
+	if (param.InitialData[0].size() > 0)
 	{
-		const uint8_t* srcBits = static_cast<const uint8_t*>(param.InitialData.data());
+		const uint8_t* srcBits = static_cast<const uint8_t*>(param.InitialData[0].data());
 		D3DLOCKED_RECT locked;
 		if (SUCCEEDED(tempTexture->LockRect(0, &locked, nullptr, 0)))
 		{

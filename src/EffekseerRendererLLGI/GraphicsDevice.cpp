@@ -217,9 +217,9 @@ bool Texture::Init(const Effekseer::Backend::TextureParameter& param)
 	auto texture = graphicsDevice_->GetGraphics()->CreateTexture(texParam);
 	auto buf = texture->Lock();
 
-	if (param.InitialData.size() > 0)
+	if (param.InitialData[0].size() > 0)
 	{
-		memcpy(buf, param.InitialData.data(), param.InitialData.size());
+		memcpy(buf, param.InitialData[0].data(), param.InitialData[0].size());
 	}
 
 	texture->Unlock();
