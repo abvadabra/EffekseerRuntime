@@ -158,7 +158,7 @@ void EffectNodeTrack::Rendering(const Instance& instance, const Instance* next_i
 	TrackRendererRef renderer = manager->GetTrackRenderer();
 	if (renderer != nullptr)
 	{
-		float t = (float)instance.m_LivingTime / (float)instance.m_LivedTime;
+		float t = (float)instance.GetLiveTimeNormalized();
 		int32_t time = (int32_t)instance.m_LivingTime;
 		int32_t livedTime = (int32_t)instance.m_LivedTime;
 

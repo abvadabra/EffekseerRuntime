@@ -356,7 +356,7 @@ void EffectNodeRibbon::UpdateRenderedInstance(Instance& instance, InstanceGroup&
 	}
 	else if (RibbonAllColor.type == RibbonAllColorParameter::Easing)
 	{
-		float t = instance.m_LivingTime / instance.m_LivedTime;
+		float t = instance.GetLiveTimeNormalized();
 
 		RibbonAllColor.easing.all.setValueToArg(
 			instValues._original, instValues.allColorValues.easing.start, instValues.allColorValues.easing.end, t);

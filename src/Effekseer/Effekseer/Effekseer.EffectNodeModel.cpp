@@ -297,7 +297,7 @@ void EffectNodeModel::InitializeRenderedInstance(Instance& instance, InstanceGro
 		instValues.allColorValues.easing.start = AllColor.easing.all.getStartValue(rand);
 		instValues.allColorValues.easing.end = AllColor.easing.all.getEndValue(rand);
 
-		float t = instance.m_LivingTime / instance.m_LivedTime;
+		float t = instance.GetLiveTimeNormalized();
 
 		AllColor.easing.all.setValueToArg(
 			instValues._original, instValues.allColorValues.easing.start, instValues.allColorValues.easing.end, t);
@@ -341,7 +341,7 @@ void EffectNodeModel::UpdateRenderedInstance(Instance& instance, InstanceGroup& 
 	}
 	else if (AllColor.type == StandardColorParameter::Easing)
 	{
-		float t = instance.m_LivingTime / instance.m_LivedTime;
+		float t = instance.GetLiveTimeNormalized();
 
 		AllColor.easing.all.setValueToArg(
 			instValues._original, instValues.allColorValues.easing.start, instValues.allColorValues.easing.end, t);

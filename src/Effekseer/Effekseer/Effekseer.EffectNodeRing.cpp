@@ -590,7 +590,7 @@ void EffectNodeRing::UpdateSingleValues(Instance& instance, const RingSinglePara
 {
 	if (param.type == RingSingleParameter::Easing)
 	{
-		values.current = param.easing.GetValue(values.easing, instance.m_LivingTime / instance.m_LivedTime);
+		values.current = param.easing.GetValue(values.easing, instance.GetLiveTimeNormalized());
 	}
 }
 
@@ -606,7 +606,7 @@ void EffectNodeRing::UpdateLocationValues(Instance& instance, const RingLocation
 	}
 	else if (param.type == RingLocationParameter::Easing)
 	{
-		values.current = param.easing.getValue(values.easing.start, values.easing.end, instance.m_LivingTime / instance.m_LivedTime);
+		values.current = param.easing.getValue(values.easing.start, values.easing.end, instance.GetLiveTimeNormalized());
 	}
 }
 
@@ -625,7 +625,7 @@ void EffectNodeRing::UpdateColorValues(Instance& instance, const RingColorParame
 	}
 	else if (param.type == RingColorParameter::Easing)
 	{
-		param.easing.setValueToArg(values.original, values.easing.start, values.easing.end, instance.m_LivingTime / instance.m_LivedTime);
+		param.easing.setValueToArg(values.original, values.easing.start, values.easing.end, instance.GetLiveTimeNormalized());
 	}
 
 	float fadeAlpha = GetFadeAlpha(instance);

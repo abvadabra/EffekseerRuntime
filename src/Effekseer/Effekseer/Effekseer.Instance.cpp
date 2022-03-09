@@ -1193,7 +1193,7 @@ void Instance::Update(float deltaFrame, bool shown)
 		}
 		else if (m_pEffectNode->AlphaCutoff.Type == ParameterAlphaCutoff::EType::FPI)
 		{
-			float t = m_LivingTime / m_LivedTime;
+			float t = GetLiveTimeNormalized();
 			auto val = alpha_cutoff_values.four_point_interpolation;
 
 			float p[4][2] = {0.0f,
@@ -1217,7 +1217,7 @@ void Instance::Update(float deltaFrame, bool shown)
 		}
 		else if (m_pEffectNode->AlphaCutoff.Type == ParameterAlphaCutoff::EType::EASING)
 		{
-			m_AlphaThreshold = m_pEffectNode->AlphaCutoff.Easing.GetValue(alpha_cutoff_values.easing, m_LivingTime / m_LivedTime);
+			m_AlphaThreshold = m_pEffectNode->AlphaCutoff.Easing.GetValue(alpha_cutoff_values.easing, GetLiveTimeNormalized());
 		}
 		else if (m_pEffectNode->AlphaCutoff.Type == ParameterAlphaCutoff::EType::F_CURVE)
 		{
@@ -1299,7 +1299,7 @@ void Instance::CalculateMatrix(float deltaFrame)
 		}
 		else if (m_pEffectNode->TranslationType == ParameterTranslationType_Easing)
 		{
-			localPosition = m_pEffectNode->TranslationEasing.GetValue(translation_values.easing, m_LivingTime / m_LivedTime);
+			localPosition = m_pEffectNode->TranslationEasing.GetValue(translation_values.easing, GetLiveTimeNormalized());
 			//localPosition = m_pEffectNode->TranslationEasing.location.getValue(
 			//	translation_values.easing.start, translation_values.easing.end, m_LivingTime / m_LivedTime);
 		}
@@ -1416,7 +1416,7 @@ void Instance::CalculateMatrix(float deltaFrame)
 		}
 		else if (m_pEffectNode->RotationType == ParameterRotationType_Easing)
 		{
-			localAngle = m_pEffectNode->RotationEasing.GetValue(rotation_values.easing, m_LivingTime / m_LivedTime);
+			localAngle = m_pEffectNode->RotationEasing.GetValue(rotation_values.easing, GetLiveTimeNormalized());
 			/*
 			localAngle = m_pEffectNode->RotationEasing.rotation.getValue(
 				rotation_values.easing.start, rotation_values.easing.end, m_LivingTime / m_LivedTime);
@@ -1429,7 +1429,7 @@ void Instance::CalculateMatrix(float deltaFrame)
 		}
 		else if (m_pEffectNode->RotationType == ParameterRotationType_AxisEasing)
 		{
-			rotation_values.axis.rotation = m_pEffectNode->RotationAxisEasing.easing.GetValue(rotation_values.axis.easing, m_LivingTime / m_LivedTime);
+			rotation_values.axis.rotation = m_pEffectNode->RotationAxisEasing.easing.GetValue(rotation_values.axis.easing, GetLiveTimeNormalized());
 		}
 		else if (m_pEffectNode->RotationType == ParameterRotationType_FCurve)
 		{
@@ -1457,7 +1457,7 @@ void Instance::CalculateMatrix(float deltaFrame)
 		}
 		else if (m_pEffectNode->ScalingType == ParameterScalingType_Easing)
 		{
-			localScaling = m_pEffectNode->ScalingEasing.GetValue(scaling_values.easing, m_LivingTime / m_LivedTime);
+			localScaling = m_pEffectNode->ScalingEasing.GetValue(scaling_values.easing, GetLiveTimeNormalized());
 			/*
 			localScaling = m_pEffectNode->ScalingEasing.Position.getValue(
 				scaling_values.easing.start, scaling_values.easing.end, m_LivingTime / m_LivedTime);
@@ -1471,7 +1471,7 @@ void Instance::CalculateMatrix(float deltaFrame)
 		}
 		else if (m_pEffectNode->ScalingType == ParameterScalingType_SingleEasing)
 		{
-			float s = m_pEffectNode->ScalingSingleEasing.GetValue(scaling_values.single_easing, m_LivingTime / m_LivedTime);
+			float s = m_pEffectNode->ScalingSingleEasing.GetValue(scaling_values.single_easing, GetLiveTimeNormalized());
 			localScaling = {s, s, s};
 		}
 		else if (m_pEffectNode->ScalingType == ParameterScalingType_FCurve)
@@ -1864,7 +1864,7 @@ std::array<float, 4> Instance::GetCustomData(int32_t index) const
 	else if (parameterCustomData->Type == ParameterCustomDataType::Easing2D)
 	{
 		SIMD::Vec2f v = parameterCustomData->Easing.Values.getValue(
-			instanceCustomData->easing.start, instanceCustomData->easing.end, m_LivingTime / m_LivedTime);
+			instanceCustomData->easing.start, instanceCustomData->easing.end, GetLiveTimeNormalized());
 		return std::array<float, 4>{v.GetX(), v.GetY(), 0, 0};
 	}
 	else if (parameterCustomData->Type == ParameterCustomDataType::FCurve2D)

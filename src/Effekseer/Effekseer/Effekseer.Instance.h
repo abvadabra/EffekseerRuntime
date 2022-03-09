@@ -374,6 +374,11 @@ public:
 
 	InstanceGlobal* GetInstanceGlobal();
 
+	float GetLiveTimeNormalized() const
+	{
+		return Clamp(m_LivingTime / m_LivedTime, 1.0F, 0.0F);	
+	}
+
 public:
 	bool IsFirstTime() const
 	{

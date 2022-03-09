@@ -337,7 +337,7 @@ void EffectNodeSprite::InitializeRenderedInstance(Instance& instance, InstanceGr
 		instValues.allColorValues.easing.start = SpriteAllColor.easing.all.getStartValue(rand);
 		instValues.allColorValues.easing.end = SpriteAllColor.easing.all.getEndValue(rand);
 
-		float t = instance.m_LivingTime / instance.m_LivedTime;
+		float t = instance.GetLiveTimeNormalized();
 
 		SpriteAllColor.easing.all.setValueToArg(
 			instValues._originalColor, instValues.allColorValues.easing.start, instValues.allColorValues.easing.end, t);
@@ -381,7 +381,7 @@ void EffectNodeSprite::UpdateRenderedInstance(Instance& instance, InstanceGroup&
 	}
 	if (SpriteAllColor.type == StandardColorParameter::Easing)
 	{
-		float t = instance.m_LivingTime / instance.m_LivedTime;
+		float t = instance.GetLiveTimeNormalized();
 
 		SpriteAllColor.easing.all.setValueToArg(
 			instValues._originalColor, instValues.allColorValues.easing.start, instValues.allColorValues.easing.end, t);
