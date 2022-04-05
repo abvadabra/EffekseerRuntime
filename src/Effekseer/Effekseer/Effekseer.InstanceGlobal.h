@@ -37,6 +37,7 @@ private:
 	/* 更新されたフレーム数 */
 	float m_updatedFrame;
 
+	bool IsSpawnDisabled = false;
 	InstanceContainer* m_rootContainer;
 	SIMD::Vec3f m_targetLocation = SIMD::Vec3f(0.0f, 0.0f, 0.0f);
 

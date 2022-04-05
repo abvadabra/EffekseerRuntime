@@ -144,17 +144,20 @@ void Instance::GenerateChildrenInRequired()
 			// Minus frame particles is generated simultaniously at frame 0.
 			if (maxGenerationChildrenCount[i] > m_generatedChildrenCount[i] && m_nextGenerationTime[i] <= currentTime)
 			{
-				// Create a particle
-				auto newInstance = group->CreateInstance();
-				if (newInstance != nullptr)
+				if(!instanceGlobal->IsSpawnDisabled)
 				{
-					SIMD::Mat43f rootMatrix = SIMD::Mat43f::Identity;
+					// Create a particle
+					auto newInstance = group->CreateInstance();
+					if (newInstance != nullptr)
+					{
+						SIMD::Mat43f rootMatrix = SIMD::Mat43f::Identity;
 
-					newInstance->Initialize(this, m_generatedChildrenCount[i], rootMatrix);
+						newInstance->Initialize(this, m_generatedChildrenCount[i], rootMatrix);
+					}
+
+					m_generatedChildrenCount[i]++;
 				}
-
-				m_generatedChildrenCount[i]++;
-
+				
 				auto gt = ApplyEq(effect, instanceGlobal, m_pParent, &rand, node->CommonValues.RefEqGenerationTime, node->CommonValues.GenerationTime);
 				m_nextGenerationTime[i] += Max(0.0f, gt.getValue(rand));
 			}

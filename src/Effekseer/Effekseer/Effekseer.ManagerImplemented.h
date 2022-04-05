@@ -374,6 +374,9 @@ public:
 
 	bool GetPaused(Handle handle) override;
 
+	
+	void SetSpawnDisabled(Handle handle, bool spawnDisabled) override;
+	
 	void SetPaused(Handle handle, bool paused) override;
 
 	void SetPausedToAllEffects(bool paused) override;

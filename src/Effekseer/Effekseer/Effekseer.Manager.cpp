@@ -1109,6 +1109,14 @@ void ManagerImplemented::SetPaused(Handle handle, bool paused)
 	}
 }
 
+void ManagerImplemented::SetSpawnDisabled(Handle handle, bool spawnDisabled)
+{
+	if(m_DrawSets.count(handle) > 0)
+	{
+		m_DrawSets[handle].GlobalPointer->IsSpawnDisabled = spawnDisabled;
+	}
+}
+	
 void ManagerImplemented::SetPausedToAllEffects(bool paused)
 {
 	std::map<Handle, DrawSet>::iterator it = m_DrawSets.begin();

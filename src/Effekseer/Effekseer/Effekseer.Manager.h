@@ -555,6 +555,8 @@ public:
 	*/
 	virtual void SetPaused(Handle handle, bool paused) = 0;
 
+	virtual void SetSpawnDisabled(Handle handle, bool spawnDisabled) = 0;
+	
 	/**
 			@brief	\~English	Pause or resume all particle of effects.
 			\~Japanese	全てのエフェクトのパーティクルを一時停止、もしくは再開する。
