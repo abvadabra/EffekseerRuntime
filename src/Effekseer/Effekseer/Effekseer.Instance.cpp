@@ -1097,8 +1097,9 @@ void Instance::Update(float deltaFrame, bool shown)
 			}
 		}
 
+		
 		// if children are removed and going not to generate a child
-		if (!killed && m_pEffectNode->CommonValues.RemoveWhenChildrenIsExtinct)
+		if (!killed && m_pEffectNode->CommonValues.RemoveWhenChildrenIsExtinct && !GetInstanceGlobal()->IsSpawnDisabled)
 		{
 			int maxcreate_count = 0;
 			InstanceGroup* group = childrenGroups_;

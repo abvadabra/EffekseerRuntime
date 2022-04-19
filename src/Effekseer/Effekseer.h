@@ -4265,7 +4265,11 @@ public:
 	*/
 	virtual void SetPaused(Handle handle, bool paused) = 0;
 
+	/**
+		@brief Stops new particles spawning but continues simulation of already spawned particles
+	 */
 	virtual void SetSpawnDisabled(Handle handle, bool spawnDisabled) = 0;
+
 	
 	/**
 			@brief	\~English	Pause or resume all particle of effects.
