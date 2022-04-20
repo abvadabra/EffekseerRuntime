@@ -29,7 +29,7 @@ public:
 	{
 	}
 
-	SIMD::Vec3f Get(SIMD::Vec3f pos) const;
+	SIMD::Vec3f Get(SIMD::Vec3f& pos) const;
 };
 
 class LightCurlNoise
@@ -67,7 +67,7 @@ public:
 
 	LightCurlNoise(int32_t seed, float scale, int32_t octave);
 
-	SIMD::Vec3f Get(SIMD::Vec3f pos) const;
+	SIMD::Vec3f Get(SIMD::Vec3f& pos) const;
 };
 
 } // namespace Effekseer

@@ -70,7 +70,7 @@ private:
 		return t * t * t * (t * (t * 6 - 15) + 10);
 	}
 
-	SIMD::Float4 GetFadeFast(const SIMD::Float4 in) const
+	SIMD::Float4 GetFadeFast(const SIMD::Float4& in) const
 	{
 		const SIMD::Float4 c6(6.0f);
 		const SIMD::Float4 c15(15.0f);
@@ -87,7 +87,7 @@ private:
 		return a + t * (b - a);
 	}
 
-	SIMD::Float4 GetLerpFast(const SIMD::Float4 t, const SIMD::Float4 a, const SIMD::Float4 b) const
+	SIMD::Float4 GetLerpFast(const SIMD::Float4& t, const SIMD::Float4& a, const SIMD::Float4& b) const
 	{
 		return a + t * (b - a);
 	}
@@ -136,7 +136,7 @@ private:
 		return this->MakeGradFast(hashnum & 15, x, y, z);
 	}
 
-	SIMD::Float4 MakeGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 u, const SIMD::Float4 v) const
+	SIMD::Float4 MakeGradFast(const SIMD::Int4& hashnum, const SIMD::Float4& u, const SIMD::Float4& v) const
 	{
 		SIMD::Int4 hashBits1 = hashnum & SIMD::Int4(1);
 		SIMD::Int4 hashBits2 = hashnum & SIMD::Int4(2);
@@ -144,7 +144,7 @@ private:
 		return (u ^ SIMD::Int4::ShiftL<31>(hashBits1).Cast4f()) + (v ^ SIMD::Int4::ShiftL<30>(hashBits2).Cast4f());
 	}
 
-	SIMD::Float4 MakeGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 x, const SIMD::Float4 y, const SIMD::Float4 z) const
+	SIMD::Float4 MakeGradFast(const SIMD::Int4& hashnum, const SIMD::Float4& x, const SIMD::Float4& y, const SIMD::Float4& z) const
 	{
 		SIMD::Float4 in1_mask = SIMD::Int4::LessThan(hashnum, SIMD::Int4(8)).Cast4f();
 		SIMD::Float4 in1 = SIMD::Float4::Select(in1_mask, x, y);
@@ -156,13 +156,13 @@ private:
 		return this->MakeGradFast(hashnum, in1, in2);
 	}
 
-	SIMD::Float4 GetGradFast(const SIMD::Int4 hashnum, const SIMD::Float4 x, const SIMD::Float4 y, const SIMD::Float4 z) const
+	SIMD::Float4 GetGradFast(const SIMD::Int4& hashnum, const SIMD::Float4& x, const SIMD::Float4& y, const SIMD::Float4& z) const
 	{
 		return this->MakeGradFast(hashnum & SIMD::Int4(15), x, y, z);
 	}
 
 public:
-	float SetNoise(SIMD::Vec3f position) const
+	float SetNoise(const SIMD::Vec3f& position) const
 	{
 		SIMD::Float4 in = position.s;
 		SIMD::Float4 flin = SIMD::Float4::Floor(in);
@@ -201,14 +201,15 @@ public:
 		return this->GetLerp(w, this->GetLerp(v, vv.GetX(), vv.GetY()), this->GetLerp(v, vv.GetZ(), vv.GetW()));
 	}
 
-	float Noise(SIMD::Vec3f position) const
+	float Noise(const SIMD::Vec3f& position) const
 	{
 		return this->SetNoise(position) * 0.5f + 0.5f;
 	}
 
 public:
-	float OctaveNoise(const std::size_t octaves_, SIMD::Vec3f position) const
+	float OctaveNoise(const std::size_t octaves_, const SIMD::Vec3f& p) const
 	{
+		SIMD::Vec3f position = p;
 		float noise_value{};
 		float amp{1.0};
 		for (std::size_t i{}; i < octaves_; ++i)

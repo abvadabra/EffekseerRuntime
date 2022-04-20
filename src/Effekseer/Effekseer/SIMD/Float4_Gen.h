@@ -29,7 +29,7 @@ struct Int4;
 /**
 	@brief	simd class for generic
 */
-struct alignas(16) Float4
+__declspec(align(16)) struct Float4
 {
 	union {
 		float vf[4];

@@ -144,7 +144,7 @@ static void CalculateNormal(ProceduralMesh& mesh)
 	CustomAlignedUnorderedMap<SIMD::Vec3f, SIMD::Vec3f> tangents;
 	CustomAlignedUnorderedMap<SIMD::Vec3f, int32_t> vertexCounts;
 
-	auto generateKey = [](SIMD::Vec3f s) -> SIMD::Vec3f {
+	auto generateKey = [](const SIMD::Vec3f& s) -> SIMD::Vec3f {
 		return SIMD::Vec3f{
 			roundf(s.GetX() * 1024.0f),
 			roundf(s.GetY() * 1024.0f),
@@ -462,7 +462,7 @@ struct RotatorSpline3
 	}
 };
 
-static SIMD::Vec3f WaveNoise(SIMD::Vec3f v, std::array<float, 3> waveOffsets, std::array<float, 3> waveFrequency, std::array<float, 3> noiseScales)
+static SIMD::Vec3f WaveNoise(const SIMD::Vec3f& v, std::array<float, 3> waveOffsets, std::array<float, 3> waveFrequency, std::array<float, 3> noiseScales)
 {
 
 	return v + SIMD::Vec3f(
@@ -479,7 +479,7 @@ struct RotatorMeshGenerator
 	bool IsConnected = false;
 
 	std::function<SIMD::Vec2f(float)> Rotator;
-	std::function<SIMD::Vec3f(SIMD::Vec3f)> Noise;
+	std::function<SIMD::Vec3f(const SIMD::Vec3f&)> Noise;
 
 	SIMD::Vec3f GetPosition(float angleValue, float depthValue) const
 	{
@@ -572,7 +572,7 @@ struct RotatedWireMeshGenerator
 	std::array<float, 2> RibbonSizes;
 
 	std::function<SIMD::Vec2f(float)> Rotator;
-	std::function<SIMD::Vec3f(SIMD::Vec3f)> Noise;
+	std::function<SIMD::Vec3f(const SIMD::Vec3f&)> Noise;
 
 	ProceduralModelCrossSectionType CrossSectionType;
 
@@ -824,7 +824,8 @@ ModelRef ProceduralModelGenerator::Generate(const ProceduralModelParameter& para
 		assert(0);
 	}
 
-	std::function<SIMD::Vec3f(SIMD::Vec3f)> noiseFunc = [parameter, &curlNoise](SIMD::Vec3f v) -> SIMD::Vec3f {
+	std::function<SIMD::Vec3f(const SIMD::Vec3f&)> noiseFunc = [parameter, &curlNoise](const SIMD::Vec3f& _v) -> SIMD::Vec3f {
+		SIMD::Vec3f v = _v;
 		// tilt noise
 		{
 			float angleX = CalcSineWave(v.GetY(), parameter.TiltNoiseFrequency[0], parameter.TiltNoiseOffset[0], parameter.TiltNoisePower[0]);
